@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>İndex</title>
+</head>
+<body>
+<div style="border:1px solid;width:600px;height:auto;margin:0 auto">
+    <h1 style="text-align:center;">Şehirler</h1>
+    {% for item in sehirler %}
+    <p style="font-weight: bold;margin-left: 10px"><a href="{% url 'sehir' item  %}">{{item|upper}}</a> <a
+            style="margin-right:10px" href="{% url 'sehir_delete' item  %}">Sil</a></p>
+    {% endfor %}
+</div>
+</body>
+</html>
