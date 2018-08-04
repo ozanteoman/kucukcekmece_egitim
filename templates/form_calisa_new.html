@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="get" action="{% url 'form-calisma-yeni' %}">
+    {% for field in form %}
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+            <br>
+            {{ field.help_text }}
+        {% endif %}
+        <br>
+        <br>
+    {% endfor %}
+    <input type="submit">
+</form>
+<p>
+    {{ isim }}
+</p>
+<p>{{ soyisim }}</p>
+<p>{{ yas }}</p>
+<p>{{ mahalle }}</p>
+</body>
+</html>

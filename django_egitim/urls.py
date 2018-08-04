@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from .views import index, sehir, sehir_delete
+from .views import index, sehir, sehir_delete, form_calisma,form_calisma_yeni_yontem
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^fsfsd/$', index, name='index'),
+    url(r'^index/$', index, name='index'),
     url(r'^sehir/(?P<sehir>[a-z]+)/$', sehir, name='sehir'),
-    url(r'^sehir/(?P<sehir>[a-z]+)/sil/$', sehir_delete,name='sehir_delete')
+    url(r'^sehir/(?P<sehir>[a-z]+)/sil/$', sehir_delete, name='sehir_delete'),
+    url(r'^form-calisma/$', form_calisma, name='form-calisma'),
+    url(r'^form-calisma-yeni/$',form_calisma_yeni_yontem,name='form-calisma-yeni')
 ]

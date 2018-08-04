@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="padding: 20px;border:1px solid;width:600px;height:auto;margin:0 auto">
+    <form method="get" action="{% url 'form-calisma' %}">
+        <label>İsim</label>
+        <input name="isim" type="text">
+        <br>
+        <br>
+        <label>Soyisim</label>
+        <input name="soyisim" type="text">
+        <br>
+        <br>
+        <input type="submit">
+    </form>
+    <p>
+        {% if isim and soyisim %}
+            {{ isim }} {{ soyisim }}
+        {% endif %}
+    </p>
+</div>
+
+</body>
+</html>
