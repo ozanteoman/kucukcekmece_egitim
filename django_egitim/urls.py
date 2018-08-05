@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from .views import index, sehir, sehir_delete, form_calisma,form_calisma_yeni_yontem
+from .views import index, sehir, sehir_delete, form_calisma, form_calisma_yeni_yontem, form_calisma_yeni_post
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^sehir/(?P<sehir>[a-z]+)/$', sehir, name='sehir'),
     url(r'^sehir/(?P<sehir>[a-z]+)/sil/$', sehir_delete, name='sehir_delete'),
     url(r'^form-calisma/$', form_calisma, name='form-calisma'),
-    url(r'^form-calisma-yeni/$',form_calisma_yeni_yontem,name='form-calisma-yeni')
+    url(r'^form-calisma-yeni/$', form_calisma_yeni_yontem, name='form-calisma-yeni'),
+    url(r'^form-calisma-yeni-post/$', form_calisma_yeni_post, name='form-calisma-yeni-post')
 ]

@@ -58,3 +58,32 @@ def form_calisma_yeni_yontem(request):
     return render(request, 'form_calisa_new.html', context={
         'form': form
     })
+
+
+def form_calisma_yeni_post(request):
+    form = KullaniciForm()
+    if request.method == "POST":
+        form = KullaniciForm(data=request.POST)
+        if form.is_valid():
+            isim = form.cleaned_data.get('isim')
+            soyisim = form.cleaned_data.get('soyisim')
+            yas = form.cleaned_data.get('yas')
+            mahalle = form.cleaned_data.get('mahalle')
+            return render(request, 'form_calisma_post.html', context={
+                'form': form, 'isim': isim, 'soyisim': soyisim, 'yas': yas, 'mahalle': mahalle
+            })
+        else:
+            return render(request, 'form_calisma_post.html', context={
+                'form': form
+            })
+        # print(request.POST)
+        # print("----------------")
+        # print(request.GET)
+        # print("bir post işlemi gerçekleşti")
+        # isim = request.POST.get('isim')
+        # soyisim = request.POST.get('soyisim')
+        # mahalle = request.POST.get('mahalle')
+        # yas = request.POST.get('yas')
+
+    return render(request, 'form_calisma_post.html',
+                  context={'form': form})
