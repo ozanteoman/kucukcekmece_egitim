@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url,include
 from django.contrib import admin
 
 from .views import index, sehir, sehir_delete, form_calisma, form_calisma_yeni_yontem, form_calisma_yeni_post
@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^sehir/(?P<sehir>[a-z]+)/sil/$', sehir_delete, name='sehir_delete'),
     url(r'^form-calisma/$', form_calisma, name='form-calisma'),
     url(r'^form-calisma-yeni/$', form_calisma_yeni_yontem, name='form-calisma-yeni'),
-    url(r'^form-calisma-yeni-post/$', form_calisma_yeni_post, name='form-calisma-yeni-post')
+    url(r'^form-calisma-yeni-post/$', form_calisma_yeni_post, name='form-calisma-yeni-post'),
+    url(r'^album/',include('album.urls'))
 ]
