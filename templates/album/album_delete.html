@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        form input[type="submit"] {
+
+            background: none;
+            border: none;
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div style="width:500px;margin:0 auto">
+    <h1 style="text-align: center">
+        Albüm Silme
+    </h1>
+    <div>Albüm isimi <b>{{ album.album_isim }}</b> olan ve Sanatçı isimi <b>{{ album.sanatci_isim }}</b> olan albümü
+        silmek istediğimize emin misiniz ?
+        <form method="post" style="display:inline" action="{% url 'album-delete' album.slug %}">
+            {% csrf_token %}
+            <input name="album_sil" type="hidden" value="{{ album.slug }}">
+            <input type="submit" value="Evet">
+            <a href="{% url 'album-list' %}">Vazgeç</a>
+        </form>
+
+    </div>
+</body>
+</html>

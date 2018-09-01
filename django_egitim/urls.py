@@ -13,8 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 
 from .views import index, sehir, sehir_delete, form_calisma, form_calisma_yeni_yontem, form_calisma_yeni_post
 
@@ -26,5 +28,7 @@ urlpatterns = [
     url(r'^form-calisma/$', form_calisma, name='form-calisma'),
     url(r'^form-calisma-yeni/$', form_calisma_yeni_yontem, name='form-calisma-yeni'),
     url(r'^form-calisma-yeni-post/$', form_calisma_yeni_post, name='form-calisma-yeni-post'),
-    url(r'^album/',include('album.urls'))
+    url(r'^album/', include('album.urls'))
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)

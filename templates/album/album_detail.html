@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<a href="{% url 'album-list' %}">Album Listeleri</a>
+<a href="{% url 'album-update' album.slug %}">Albumü Güncelle</a>
 <h1>{{ album.album_isim }}</h1>
 <h1>{{ album.album_tur }}</h1>
 <h1>{{ album.sanatci_isim }}</h1>

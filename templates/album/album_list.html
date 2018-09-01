@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div style="width:700px;margin:0 auto;border:1px solid">
+    <a href="{% url 'album-create' %}">Album Oluştur</a>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <td>#</td>
+            <td><b>Sanatçı İsim</b></td>
+            <td><b>Albüm İsim</b></td>
+            <td><b>İşlemler</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for album in albumler %}
+            <tr style="border:1px solid">
+            <td>
+                {{ album.pk }}
+            </td>
+                <td>
+                    {{ album.sanatci_isim }}
+                </td>
+                <td>
+                    {{ album.album_isim }}
+                </td>
+                <td>
+                    <a href="{% url 'album-detail' album.slug %}">Detay</a>
+                    <a href="{% url 'album-update' album.slug %}">Güncelle</a>
+                    <a href="{% url 'album-delete' album.slug %}">Sil</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
