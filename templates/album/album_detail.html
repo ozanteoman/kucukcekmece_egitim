@@ -10,6 +10,9 @@
 <h1>{{ album.album_isim }}</h1>
 <h1>{{ album.album_tur }}</h1>
 <h1>{{ album.sanatci_isim }}</h1>
+{% if album.get_album_photo %}
+    <img src="{{ album.get_album_photo }}">
+{% endif %}
 <h1>{{ album.is_favorite }}</h1>
 </body>
 </html>

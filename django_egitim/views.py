@@ -9,9 +9,7 @@ sehirler_sozluk = {
 
 
 def index(request):
-    return render(request=request, template_name='index.html', context={
-        "sehirler": sehirler_sozluk
-    })
+    return HttpResponseRedirect(reverse('album-list'))
 
 
 def sehir(request, sehir):

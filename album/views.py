@@ -14,7 +14,7 @@ def album_update(request, slug):
     album = get_object_or_404(Album, slug=slug)
     form = AlbumUpdateForm(instance=album)
     if request.method == "POST":
-        form = AlbumUpdateForm(instance=album, data=request.POST)
+        form = AlbumUpdateForm(instance=album, data=request.POST, files=request.FILES or None)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': form.instance.slug}))
@@ -23,9 +23,10 @@ def album_update(request, slug):
 
 
 def album_create(request):
+    print(request.FILES)
     form = AlbumCreateForm()
     if request.method == "POST":
-        form = AlbumCreateForm(data=request.POST)
+        form = AlbumCreateForm(data=request.POST, files=request.FILES or None)
         if form.is_valid():
             album = form.save()
             return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': album.slug}))

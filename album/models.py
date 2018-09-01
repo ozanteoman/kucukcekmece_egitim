@@ -24,7 +24,16 @@ class Album(models.Model):
             new_slug = "%s-%s" % (template_slug, sayac)
         return new_slug
 
+    def get_album_photo(self):
+        if self.album_logo:
+            return self.album_logo.url
+        return None
+
     def save(self, *args, **kwargs):
         if self.id == None:
             self.slug = self.get_unique_slug()
+        else:
+            last_album = Album.objects.get(slug=self.slug)
+            if last_album.album_isim != self.album_isim:
+                self.slug = self.get_unique_slug()
         super(Album, self).save(*args, **kwargs)

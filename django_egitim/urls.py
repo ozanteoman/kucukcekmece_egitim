@@ -22,7 +22,7 @@ from .views import index, sehir, sehir_delete, form_calisma, form_calisma_yeni_y
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/$', index, name='index'),
+    url(r'^$', index, name='index'),
     url(r'^sehir/(?P<sehir>[a-z]+)/$', sehir, name='sehir'),
     url(r'^sehir/(?P<sehir>[a-z]+)/sil/$', sehir_delete, name='sehir_delete'),
     url(r'^form-calisma/$', form_calisma, name='form-calisma'),
@@ -31,4 +31,5 @@ urlpatterns = [
     url(r'^album/', include('album.urls'))
 ]
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

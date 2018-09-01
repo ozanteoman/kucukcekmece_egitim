@@ -7,7 +7,7 @@
 <body>
 <div style="width:500px;margin:0 auto">
     <h1 style="text-align:center">Albüm Güncelle</h1>
-    <form method="post" action="{% url 'album-update' form.instance.slug %}">
+    <form method="post" enctype="multipart/form-data" action="{% url 'album-update' form.instance.slug %}">
         <table>
             {% csrf_token %}
             {% for field in form %}
