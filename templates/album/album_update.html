@@ -1,29 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div style="width:500px;margin:0 auto">
+{% extends 'base.html' %}
+{% block icerik %}
     <h1 style="text-align:center">Albüm Güncelle</h1>
-    <form method="post" enctype="multipart/form-data" action="{% url 'album-update' form.instance.slug %}">
-        <table>
-            {% csrf_token %}
-            {% for field in form %}
-                <tr>
-                    <td>{{ field.label_tag }}</td>
-                    <td>{{ field }}</td>
-                </tr>
-            {% endfor %}
-            <tr>
-                <td><input type="submit" value="Gönder"></td>
-            </tr>
+    <div class="col-lg-12">
+        <div class="col-lg-6 col-lg-offset-3">
+            <form method="post" enctype="multipart/form-data" action="{% url 'album-update' form.instance.slug %}">
+                {% csrf_token %}
+                {% include 'album/include/form-include.html' %}
+                <div class="form-group">
+                    <input type="submit" class="btn btn-sm btn-primary" value="Album Güncelle">
+                    <a href="{% url 'album-detail' form.instance.slug %}">Albüm Detay</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
 
-        </table>
-    </form>
-
-
-</div>
-</body>
-</html>
+{% block title %}
+    Albüm Güncelle
+{% endblock %}

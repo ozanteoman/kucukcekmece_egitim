@@ -5,32 +5,34 @@
 {% endblock %}
 {% block icerik %}
     <div class="albums-container container-fluid">
-        <div class="col-sm-4 col-lg-3">
-            <div class="thumbnail">
-                <a href="#">
-                    <img src="" class="img-responsive">
-                </a>
-                <div class="caption">
-
-                    <!-- View Details -->
-                    <a href="#" class="btn btn-primary btn-sm" role="button">View Details</a>
-
-                    <!-- Delete Album -->
-                    <form action="#" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="album_id" value="#"/>
-                        <button type="submit" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                    </form>
-
-                    <!-- Favorite Album -->
-                    <a href="#" class="btn btn-default btn-sm btn-favorite" role="button">
-                        <span class="glyphicon glyphicon-star"></span>
+        {% for album in albumler %}
+            <div class="col-sm-4 col-lg-3">
+                <div class="thumbnail">
+                    <a href="#">
+                        {% if album.get_album_photo %}
+                            <img src="{{ album.get_album_photo }}" class="img-responsive">
+                        {% else %}
+                            <img src="{% static 'img/defult.jpg' %}" class="img-responsive">
+                        {% endif %}
                     </a>
+                    <div class="caption">
+                        <h2>{{ album.album_isim|truncatewords:3 }}</h2>
+                        <h4>{{ album.sanatci_isim }}</h4>
+                        <!-- View Details -->
+                        <a href="{% url 'album-detail' album.slug %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
+                        <!-- Delete Album -->
+                        <a href="{% url 'album-delete' album.slug %}" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                        <!-- Favorite Album -->
+                        <a href="#" class="btn btn-default btn-sm btn-favorite" role="button">
+                            <span class="glyphicon glyphicon-star"></span>
+                        </a>
+
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}

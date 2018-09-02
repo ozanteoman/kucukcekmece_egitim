@@ -23,7 +23,6 @@ def album_update(request, slug):
 
 
 def album_create(request):
-    print(request.FILES)
     form = AlbumCreateForm()
     if request.method == "POST":
         form = AlbumCreateForm(data=request.POST, files=request.FILES or None)
@@ -47,15 +46,7 @@ def album_delete(request, slug):
     # album = get_object_or_404(Album, pk=pk)
     try:
         album = Album.objects.get(slug=slug)
+        album.delete()
     except Album.DoesNotExist:
         return render(request, 'Http404.html')
-    if request.method == "POST":
-        album.delete()
-        #  album_pk = request.POST.get('album_sil', None)
-        #  print(al)
-        #  silinecek_album = get_object_or_404(Album, pk=album_pk)
-        #  silinecek_album.delete()
-        return HttpResponseRedirect(reverse('album-list'))
-
-    # album.delete()
-    return render(request=request, template_name='album/album_delete.html', context={'album': album})
+    return HttpResponseRedirect(reverse('album-list'))

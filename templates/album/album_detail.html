@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a href="{% url 'album-list' %}">Album Listeleri</a>
-<a href="{% url 'album-update' album.slug %}">Albumü Güncelle</a>
-<h1>{{ album.album_isim }}</h1>
-<h1>{{ album.album_tur }}</h1>
-<h1>{{ album.sanatci_isim }}</h1>
-{% if album.get_album_photo %}
-    <img src="{{ album.get_album_photo }}">
-{% endif %}
-<h1>{{ album.is_favorite }}</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block icerik %}
+    <div class="col-sm-4 col-lg-3">
+        <div class="thumbnail">
+            {% if album.get_album_photo %}
+                <img src="{{ album.get_album_photo }}" class="img-responsive">
+            {% else %}
+                <img src="{% static 'img/defult.jpg' %}" class="img-responsive">
+            {% endif %}
+            <div class="caption">
+                <h2>{{ album.album_isim }}
+                    <small>{{ album.album_tur }}</small>
+                </h2>
+                <h4>{{ album.sanatci_isim }}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-sm-8 col-lg-9">
+        <ul class="nav nav-pills" style="margin-bottom: 10px;">
+            <li role="presentation" class="active"><a href="{% url 'album-list' %}">Tüm Albümler</a></li>
+            <li role="presentation" class=""><a href="{% url 'album-update' album.slug %}">Albüm Güncelle</a></li>
+            <li role="presentation"><a href="#">Add New Song</a></li>
+        </ul>
+    </div>
+{% endblock %}

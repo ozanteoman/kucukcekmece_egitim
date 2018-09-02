@@ -3,7 +3,7 @@ from django.template.defaultfilters import slugify
 
 
 class Album(models.Model):
-    album_isim = models.CharField(max_length=100, verbose_name='Albüm İsim')
+    album_isim = models.CharField(max_length=100, verbose_name='Albüm İsim',help_text='Albüm İsimi Giriniz')
     slug = models.SlugField(max_length=200, null=True, unique=True)
     sanatci_isim = models.CharField(max_length=100, verbose_name='Sanatçı İsim')
     album_tur = models.CharField(max_length=100, verbose_name='Albüm Tür')
