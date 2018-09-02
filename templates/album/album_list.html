@@ -1,2 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+    Album List
+{% endblock %}
+{% block icerik %}
+    <div class="albums-container container-fluid">
+        <div class="col-sm-4 col-lg-3">
+            <div class="thumbnail">
+                <a href="#">
+                    <img src="" class="img-responsive">
+                </a>
+                <div class="caption">
+
+                    <!-- View Details -->
+                    <a href="#" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                    <!-- Delete Album -->
+                    <form action="#" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="album_id" value="#"/>
+                        <button type="submit" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </form>
+
+                    <!-- Favorite Album -->
+                    <a href="#" class="btn btn-default btn-sm btn-favorite" role="button">
+                        <span class="glyphicon glyphicon-star"></span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

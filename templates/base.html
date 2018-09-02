@@ -3,10 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block ust_icerik %}
+    {% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -25,7 +27,7 @@
         <!-- Items -->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
-                <li class=""><a href="#"><span
+                <li class=""><a href="{% url 'album-list' %}"><span
                         class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Albums</a></li>
                 <li class=""><a href="#"><span
                         class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Songs</a></li>
@@ -38,7 +40,7 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#">
+                    <a  href="{% url 'album-create' %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Album
                     </a>
                 </li>
@@ -53,7 +55,10 @@
     </div>
 </nav>
 {% block icerik %}
+
 {% endblock %}
+
+
 
 </body>
 </html>

@@ -1,26 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form enctype="multipart/form-data" method="post" action="{% url "album-create" %}" style="margin-left: 300px;margin-top: 100px;">
-    <h1>Album Oluşturma</h1>
-    {% csrf_token %}
-    {% for field in form %}
-        <div style="margin-bottom: 20px;">
-            <div style="width:150px">
-                {{ field.label }}
+{% extends 'base.html' %}
+{% load static %}
+{% block icerik %}
+    <form enctype="multipart/form-data" method="post" action="{% url "album-create" %}"
+          style="margin-left: 300px;margin-top: 100px;">
+        <h1>Album Oluşturma</h1>
+        {% csrf_token %}
+        {% for field in form %}
+            <div style="margin-bottom: 20px;">
+                <div style="width:150px">
+                    {{ field.label }}
+                </div>
+                <div style="width:300px">
+                    {{ field }}
+                </div>
             </div>
-            <div style="width:300px">
-                {{ field }}
-            </div>
-        </div>
-    {% endfor %}
-    <input type="submit" value="Album Oluştur">
-<a href="{% url 'album-list' %}">Albümlerim</a>
-</form>
+        {% endfor %}
+        <input type="submit" value="Album Oluştur">
+        <a href="{% url 'album-list' %}">Albümlerim</a>
+    </form>
+{% endblock %}
 
-</body>
-</html>
+{% block title %}
+    Album Create
+{% endblock %}
