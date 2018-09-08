@@ -27,3 +27,8 @@ ul.errorlist > li {
 .glyphicon-star.active {
     color: #FDB230;
 }
+
+.pull-center{
+    float: none;
+    margin:0 auto;
+}

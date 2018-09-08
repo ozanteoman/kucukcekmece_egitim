@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404
+from django.contrib import messages
 from .forms import AlbumCreateForm, AlbumUpdateForm
 from .models import Album
 
@@ -28,6 +29,7 @@ def album_create(request):
         form = AlbumCreateForm(data=request.POST, files=request.FILES or None)
         if form.is_valid():
             album = form.save()
+            messages.success(request,"Tebrikler! Albüm Oluşturuldu.",extra_tags='success')
             return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': album.slug}))
     context = {'form': form}
     return render(request, 'album/album_create.html', context=context)
@@ -50,3 +52,16 @@ def album_delete(request, slug):
     except Album.DoesNotExist:
         return render(request, 'Http404.html')
     return HttpResponseRedirect(reverse('album-list'))
+
+
+def album_favori(request):
+    if request.method == "POST":
+        slug = request.POST.get('slug')
+        album = Album.objects.get(slug=slug)
+        if album.is_favorite == True:
+            album.is_favorite = False
+            album.save()
+        else:
+            album.is_favorite = True
+            album.save()
+        return HttpResponseRedirect(reverse('album-list'))

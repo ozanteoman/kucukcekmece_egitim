@@ -41,7 +41,7 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a  href="{% url 'album-create' %}">
+                    <a href="{% url 'album-create' %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Album
                     </a>
                 </li>
@@ -55,10 +55,10 @@
 
     </div>
 </nav>
+{% include 'messages.html' %}
 {% block icerik %}
 
 {% endblock %}
-
 
 
 </body>
