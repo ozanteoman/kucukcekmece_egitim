@@ -21,7 +21,7 @@ def album_update(request, slug):
             msg = "Tebrikler! %s isimli albüm başarıyla güncelledi."%(form.instance.album_isim)
             messages.success(request,msg,extra_tags='info')
             return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': form.instance.slug}))
-    context = {'form': form}
+    context = {'form': form,'album':album}
     return render(request, 'album/album_update.html', context=context)
 
 

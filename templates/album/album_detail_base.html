@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block icerik %}
+    <div class="container-fluid songs-container">
+        <div class="container-fluid songs-container">
+            <div class="col-sm-4 col-lg-3">
+                <div class="thumbnail">
+                    {% if album.get_album_photo %}
+                        <img style="height:300px" src="{{ album.get_album_photo }}" class="img-responsive">
+                    {% else %}
+                        <img style="height:300px" src="{% static 'img/defult.jpg' %}" class="img-responsive">
+                    {% endif %}
+                    <div class="caption">
+                        <h2>{{ album.album_isim }}
+                            <small>{{ album.album_tur }}</small>
+                        </h2>
+                        <h4>{{ album.sanatci_isim }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-lg-9">
+                <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                    <li role="presentation" class="{% block album_list_active %}{% endblock %}"><a
+                            href="{% url 'album-list' %}">Tüm Albümler</a></li>
+                    <li role="presentation" class="{% block album_update_active %}{% endblock %}"><a
+                            href="{% url 'album-update' album.slug %}">Albüm Güncelle</a>
+                    </li>
+                    <li class="{% block album_song_create_active %}{% endblock %}" role="presentation"><a href="#">Add
+                        New Song</a></li>
+                </ul>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {% block detay_icerik %}
+
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -10,16 +10,17 @@
                 <div class="thumbnail">
                     <a href="#">
                         {% if album.get_album_photo %}
-                            <img src="{{ album.get_album_photo }}" class="img-responsive">
+                            <img style="height:300px" src="{{ album.get_album_photo }}" class="img-responsive">
                         {% else %}
-                            <img src="{% static 'img/defult.jpg' %}" class="img-responsive">
+                            <img style="height:300px" src="{% static 'img/defult.jpg' %}" class="img-responsive">
                         {% endif %}
                     </a>
                     <div class="caption">
                         <h2>{{ album.album_isim|truncatewords:3 }}</h2>
                         <h4>{{ album.sanatci_isim }}</h4>
                         <!-- View Details -->
-                        <a href="{% url 'album-detail' album.slug %}" class="btn btn-primary btn-sm" role="button">View
+                        <a href="{% url 'album-detail' album.slug %}" class="btn btn-primary btn-sm"
+                           role="button">View
                             Details</a>
 
                         <!-- Delete Album -->

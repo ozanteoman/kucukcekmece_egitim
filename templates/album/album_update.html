@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
-{% block icerik %}
-    <h1 style="text-align:center">Albüm Güncelle</h1>
+{% extends 'album/album_detail_base.html' %}    <h1 style="text-align:center">Albüm Güncelle</h1>
+
+{% block detay_icerik %}
     <div class="col-lg-12">
         <div class="col-lg-6 col-lg-offset-3">
             <form method="post" enctype="multipart/form-data" action="{% url 'album-update' form.instance.slug %}">
@@ -15,6 +15,6 @@
     </div>
 {% endblock %}
 
-{% block title %}
-    Albüm Güncelle
+{% block album_update_active %}
+    active
 {% endblock %}
