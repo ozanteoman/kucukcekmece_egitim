@@ -18,6 +18,8 @@ def album_update(request, slug):
         form = AlbumUpdateForm(instance=album, data=request.POST, files=request.FILES or None)
         if form.is_valid():
             form.save()
+            msg = "Tebrikler! %s isimli albüm başarıyla güncelledi."%(form.instance.album_isim)
+            messages.success(request,msg,extra_tags='info')
             return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': form.instance.slug}))
     context = {'form': form}
     return render(request, 'album/album_update.html', context=context)
@@ -29,7 +31,7 @@ def album_create(request):
         form = AlbumCreateForm(data=request.POST, files=request.FILES or None)
         if form.is_valid():
             album = form.save()
-            messages.success(request,"Tebrikler! Albüm Oluşturuldu.",extra_tags='success')
+            messages.success(request, "Tebrikler! Albüm Oluşturuldu.", extra_tags='success')
             return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': album.slug}))
     context = {'form': form}
     return render(request, 'album/album_create.html', context=context)
@@ -49,6 +51,8 @@ def album_delete(request, slug):
     try:
         album = Album.objects.get(slug=slug)
         album.delete()
+        msg = "%s isimli albüm başarıyla silindi" % (album.album_isim)
+        messages.success(request,msg,extra_tags='danger')
     except Album.DoesNotExist:
         return render(request, 'Http404.html')
     return HttpResponseRedirect(reverse('album-list'))
