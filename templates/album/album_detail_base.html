@@ -21,8 +21,8 @@
             </div>
             <div class="col-sm-8 col-lg-9">
                 <ul class="nav nav-pills" style="margin-bottom: 10px;">
-                    <li role="presentation" class="{% block album_list_active %}{% endblock %}"><a
-                            href="{% url 'album-list' %}">Tüm Albümler</a></li>
+                    <li role="presentation" class="{% block album_detail_active %}{% endblock %}"><a
+                            href="{% url 'album-detail' album.slug %}">Albüm</a></li>
                     <li role="presentation" class="{% block album_update_active %}{% endblock %}"><a
                             href="{% url 'album-update' album.slug %}">Albüm Güncelle</a>
                     </li>
