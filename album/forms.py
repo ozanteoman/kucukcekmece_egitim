@@ -1,5 +1,6 @@
 from django import forms
-from .models import Album
+from .models import Album, Sarki
+
 
 
 class AlbumCreateForm(forms.ModelForm):
@@ -21,6 +22,18 @@ class AlbumUpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AlbumUpdateForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            if field != 'is_favorite':
+                self.fields[field].widget.attrs = {'class': 'form-control'}
+
+
+class SongAddForm(forms.ModelForm):
+    class Meta:
+        model = Sarki
+        fields = ['sarki_isim', 'ses_dosyasi', 'is_favorite']
+
+    def __init__(self,*args,**kwargs):
+        super(SongAddForm, self).__init__(*args,**kwargs)
         for field in self.fields:
             if field != 'is_favorite':
                 self.fields[field].widget.attrs = {'class': 'form-control'}

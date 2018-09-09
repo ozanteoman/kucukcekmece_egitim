@@ -1,0 +1,16 @@
+{% extends 'album/album_detail_base.html' %}
+{% load static %}
+
+{% block album_song_create_active %}active{% endblock %}
+
+{% block detay_icerik %}
+    <div class="row">
+        <div class="col-lg-5">
+            <form enctype="multipart/form-data" method="post" action="{% url 'add-song' album.slug %}">
+                {% csrf_token %}
+                {% include 'album/include/form-include.html' %}
+                <input type="submit" class="btn btn-sm btn-success" value="Kaydet">
+            </form>
+        </div>
+    </div>
+{% endblock %}
