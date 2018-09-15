@@ -43,7 +43,7 @@ class Sarki(models.Model):
     album = models.ForeignKey(Album, null=True)
     sarki_isim = models.CharField(max_length=50, blank=False, null=True, verbose_name='Şarkı İsim')
     is_favorite = models.BooleanField(default=False)
-        ses_dosyasi = models.FileField(upload_to='music', null=True, blank=False, verbose_name='Ses Dosyası')
+    ses_dosyasi = models.FileField(upload_to='music', null=True, blank=False, verbose_name='Ses Dosyası')
 
     class Meta:
         verbose_name_plural = 'Şarkılar'

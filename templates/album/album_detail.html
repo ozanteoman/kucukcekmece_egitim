@@ -4,6 +4,25 @@
 
 {% block detay_icerik %}
     <h3>All Songs</h3>
+    <div class="row">
+        <form style="display: inline" action="{% url 'album-detail' album.slug %}" method="get">
+            {% for field in form %}
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <span class="text-danger">
+                            {{ error }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-lg-8">
+                <input type="submit" class="btn btn-sm btn-success" value="Sorgula">
+            </div>
+        </form>
+    </div>
     <table class="table">
         <thead>
         <tr>
@@ -14,7 +33,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for sarki in album.sarki_set.all %}
+        {% for sarki in songs %}
             <tr>
                 <td>{{ sarki.sarki_isim }}</td>
                 <td>
@@ -25,20 +44,28 @@
                     </a>
                 </td>
                 <td>
-                    <a href="#" class="btn-favorite"><span
-                            class="glyphicon glyphicon-star"></span></a>
+                    <a href="{% url 'favorite-song' album.slug sarki.pk %}?next={% url 'album-detail' album.slug %}"
+                       class="btn-favorite"><span
+                            class="glyphicon glyphicon-star {% if sarki.is_favorite %}active{% endif %} "></span></a>
                 </td>
                 <td>
-                    <form action="#" method="post"
-                          style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="song_id" value="{{ song.id }}"/>
-                        <button type="submit" class="btn btn-danger btn-xs">
-                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
-                        </button>
-                    </form>
+                    <a href="{% url 'delete-song' album.slug sarki.pk %}" class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                    </a>
                 </td>
             </tr>
+        {% empty %}
+                {% if album.sarki_set.all|length > 0 %}
+                <tr>
+                <td colspan="4">
+                    <p class="text-center">
+                        <span class="glyphicon glyphicon-search">
+                            <b class="text-primary lead" >Aradığınız Kriterlerde Sonuç Bulunamadı</b>
+                        </span>
+                    </p>
+                </td>
+                </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>

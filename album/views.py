@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404
 from django.contrib import messages
-from .forms import AlbumCreateForm, AlbumUpdateForm, SongAddForm
-from .models import Album
+from .forms import AlbumCreateForm, AlbumUpdateForm, SongAddForm, SongQueryForm
+from .models import Album, Sarki
 
 
 def album_list(request):
@@ -38,11 +38,20 @@ def album_create(request):
 
 
 def album_detail(request, slug):
+    form = SongQueryForm(request.GET or None)
     try:
         album = Album.objects.get(slug=slug)
+        songs = album.sarki_set.all()
+        if form.is_valid():
+            q = form.cleaned_data.get('query')
+            if q == 'all':
+                songs = album.sarki_set.all()
+            elif q == 'favorites':
+                songs = album.sarki_set.filter(is_favorite=True)
+
     except Album.DoesNotExist:
         return render(request, 'Http404.html')
-    context = {'album': album}
+    context = {'album': album, 'form': form, 'songs': songs}
     return render(request, 'album/album_detail.html', context=context)
 
 
@@ -78,6 +87,28 @@ def add_song(request, slug):
         song = form.save(commit=False)
         song.album = album
         song.save()
-        messages.success(request,"Tebrikler Bir Şarkı Eklediniz",extra_tags='success')
+        messages.success(request, "Tebrikler Bir Şarkı Eklediniz", extra_tags='success')
         return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': album.slug}))
     return render(request, 'album/songs/add_song.html', context={'album': album, 'form': form})
+
+
+def delete_song(request, slug, pk):
+    album = Album.objects.get(slug=slug)
+    song = Sarki.objects.get(album=album, pk=pk)
+    song.delete()
+    msg = "Tebrikler <b>%s</b> isimli şarkı başarıyla silindi" % (song.sarki_isim)
+    messages.success(request, msg, extra_tags='danger')
+    return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': album.slug}))
+
+
+def song_favorite(request, slug, pk):
+    next = request.GET.get('next', None)
+    album = Album.objects.get(slug=slug)
+    # album.sarki_set.all() bu albüme ait olan tüm şarkılar getir.
+    song = album.sarki_set.get(pk=pk)
+    if song.is_favorite:
+        song.is_favorite = False
+    else:
+        song.is_favorite = True
+    song.save()
+    return HttpResponseRedirect(next)  # geldiğin sayfaya geri git.
