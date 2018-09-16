@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from .views import album_create, album_detail, album_list, album_update, album_delete, album_favori, add_song, \
-    delete_song, song_favorite
+    delete_song, song_favorite, song_update
 
 urlpatterns = [
     url(r'^album-favorite', view=album_favori, name='album-favorite'),
@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^album-delete/(?P<slug>[\w-]+)/$', album_delete, name='album-delete'),
     url(r'^add-song/(?P<slug>[\w-]+)/$', add_song, name='add-song'),
     url(r'^(?P<slug>[\w-]+)/delete-song/(?P<pk>[0-9]+)/$', view=delete_song, name='delete-song'),
-    url(r'^(?P<slug>[\w-]+)/favorite-song/(?P<pk>[0-9]+)/$', view=song_favorite, name='favorite-song')
+    url(r'^(?P<slug>[\w-]+)/favorite-song/(?P<pk>[0-9]+)/$', view=song_favorite, name='favorite-song'),
+    url(r'^(?P<slug>[\w-]+)/song-update/(?P<pk>[0-9]+)/$', view=song_update, name='song-update')
 ]

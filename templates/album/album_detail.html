@@ -1,8 +1,8 @@
 {% extends 'album/album_detail_base.html' %}
 {% load static %}
-
-
 {% block detay_icerik %}
+    <h1>{{ request.GET.page }}</h1>
+    <h1>{{ request.GET.query }}</h1>
     <h3>All Songs</h3>
     <div class="row">
         <form style="display: inline" action="{% url 'album-detail' album.slug %}" method="get">
@@ -49,26 +49,70 @@
                             class="glyphicon glyphicon-star {% if sarki.is_favorite %}active{% endif %} "></span></a>
                 </td>
                 <td>
+                    <a href="{% url 'song-update' album.slug sarki.pk %}" class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-pencil"></span>&nbsp; Update
+                    </a>
                     <a href="{% url 'delete-song' album.slug sarki.pk %}" class="btn btn-danger btn-xs">
                         <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
                     </a>
                 </td>
             </tr>
         {% empty %}
-                {% if album.sarki_set.all|length > 0 %}
+            {% if album.sarki_set.all|length > 0 %}
                 <tr>
-                <td colspan="4">
-                    <p class="text-center">
+                    <td colspan="4">
+                        <p class="text-center">
                         <span class="glyphicon glyphicon-search">
-                            <b class="text-primary lead" >Aradığınız Kriterlerde Sonuç Bulunamadı</b>
+                            <b class="text-primary lead">Aradığınız Kriterlerde Sonuç Bulunamadı</b>
                         </span>
-                    </p>
-                </td>
+                        </p>
+                    </td>
                 </tr>
             {% endif %}
         {% endfor %}
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-lg-12">
+            {% if songs.has_other_pages %}
+                <ul class="pagination">
+                    {% if songs.has_previous %}
+                        <li><a href="?page=
+
+
+
+                                {{ songs.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">&laquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in songs.paginator.page_range %}
+                        {% if i == songs.number %}
+                            <li class="active"><span>{{ i }} </span></li>
+                        {% else %}
+                            <li><a href="?page=
+
+
+
+                                    {{ i }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if songs.has_next %}
+                        <li><a href="?page=
+
+
+
+                                {{ songs.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">&raquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+
+                </ul>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 {% block album_detail_active %}active{% endblock %}
 

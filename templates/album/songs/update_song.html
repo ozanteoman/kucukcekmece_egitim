@@ -1,0 +1,25 @@
+{% extends 'album/album_detail_base.html' %}
+{% load static %}
+
+{% block detay_icerik %}
+    <form method="post" enctype="multipart/form-data" action="{% url 'song-update' album.slug form.instance.pk %}">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            {{ field.label }}
+                        </label>
+                        {{ field }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-lg-4">
+                <input type="submit" value="Kaydet" class="btn btn-primary btn-sm">
+            </div>
+        </div>
+    </form>
+{% endblock %}

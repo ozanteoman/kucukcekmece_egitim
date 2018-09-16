@@ -22,15 +22,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Viberr</a>
+            <a  class="navbar-brand link-active" href="#">Küçükçekmece Sevdalıları</a>
         </div>
 
         <!-- Items -->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
-                <li class=""><a href="{% url 'album-list' %}"><span
-                        class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Albums</a></li>
-                <li class=""><a href="#"><span
+                <li class="{% block album_active %}{% endblock %}"><a href="{% url 'album-list' %}">
+                    <span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp;Albums</a></li>
+                <li class="{% block songs_active %}{% endblock %}"><a href="#"><span
                         class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Songs</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search" method="get" action="#">
@@ -40,7 +40,7 @@
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                <li class="{% block album_create %}{% endblock %}">
                     <a href="{% url 'album-create' %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Album
                     </a>

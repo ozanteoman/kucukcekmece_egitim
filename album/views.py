@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .forms import AlbumCreateForm, AlbumUpdateForm, SongAddForm, SongQueryForm
 from .models import Album, Sarki
 
@@ -39,6 +40,7 @@ def album_create(request):
 
 def album_detail(request, slug):
     form = SongQueryForm(request.GET or None)
+    page = request.GET.get('page', 1)
     try:
         album = Album.objects.get(slug=slug)
         songs = album.sarki_set.all()
@@ -48,6 +50,14 @@ def album_detail(request, slug):
                 songs = album.sarki_set.all()
             elif q == 'favorites':
                 songs = album.sarki_set.filter(is_favorite=True)
+
+        paginator = Paginator(songs, 1)
+        try:
+            songs = paginator.page(page)
+        except EmptyPage:
+            songs = paginator.page(paginator.num_pages)
+        except PageNotAnInteger:
+            songs = paginator.page(1)
 
     except Album.DoesNotExist:
         return render(request, 'Http404.html')
@@ -112,3 +122,16 @@ def song_favorite(request, slug, pk):
         song.is_favorite = True
     song.save()
     return HttpResponseRedirect(next)  # geldiğin sayfaya geri git.
+
+
+def song_update(request, slug, pk):
+    album = Album.objects.get(slug=slug)
+    song = album.sarki_set.get(pk=pk)
+    form = SongAddForm(instance=song, data=request.POST or None, files=request.FILES or None)
+    if form.is_valid():
+        form.save(commit=True)
+        messages.success(request, 'Tebrikler Şarkınız Başarıyla Güncellendi.', extra_tags='success')
+        return HttpResponseRedirect(reverse('album-detail', kwargs={'slug': album.slug}))
+
+    context = {'album': album, 'form': form}
+    return render(request, 'album/songs/update_song.html', context=context)

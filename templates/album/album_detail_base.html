@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block album_active %}active{% endblock %}
 
 {% block icerik %}
     <div class="container-fluid songs-container">
@@ -26,8 +27,9 @@
                     <li role="presentation" class="{% block album_update_active %}{% endblock %}"><a
                             href="{% url 'album-update' album.slug %}">Albüm Güncelle</a>
                     </li>
-                    <li class="{% block album_song_create_active %}{% endblock %}" role="presentation"><a href="{% url 'add-song' album.slug %}">
-                    Şarkı Ekle</a></li>
+                    <li class="{% block album_song_create_active %}{% endblock %}" role="presentation"><a
+                            href="{% url 'add-song' album.slug %}">
+                        Şarkı Ekle</a></li>
                 </ul>
                 <div class="panel panel-default">
                     <div class="panel-body">

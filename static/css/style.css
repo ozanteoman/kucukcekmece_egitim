@@ -28,7 +28,12 @@ ul.errorlist > li {
     color: #FDB230;
 }
 
-.pull-center{
+.pull-center {
     float: none;
-    margin:0 auto;
+    margin: 0 auto;
+}
+
+.link-active {
+    color: white;!important;
+    background-color: black!important;
 }
