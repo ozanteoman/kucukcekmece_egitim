@@ -37,7 +37,7 @@ class SongAddForm(forms.ModelForm):
             if field != 'is_favorite':
                 self.fields[field].widget.attrs = {'class': 'form-control'}
         if self.instance:
-            self.fields['ses_dosyasi'].required=False
+            self.fields['ses_dosyasi'].required = False
 
     def clean_ses_dosyasi(self):
         value = self.cleaned_data.get('ses_dosyasi')
@@ -56,3 +56,18 @@ class SongQueryForm(forms.Form):
 
     query = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=FAVORITE_OR_ALL,
                               required=False, initial='all')
+
+
+class SongsQueryForm2(forms.Form):
+    FAVORTIE_OR_ALL = (
+        ('all', 'Tüm Şarkılar'),
+        ('favorites', 'Favori Şarkılar')
+    )
+
+    favorite_or_all = forms.ChoiceField(choices=FAVORTIE_OR_ALL,
+                                        widget=forms.Select(attrs={'class': 'form-control'}),
+                                        required=False,
+                                        initial='all')
+    album = forms.ModelChoiceField(empty_label='Albüm Seçiniz',widget=forms.Select(attrs={'class': 'form-control'}),
+                                   required=False,
+                                   queryset=Album.objects.all())

@@ -27,7 +27,7 @@ class Album(models.Model):
     def get_album_photo(self):
         if self.album_logo:
             return self.album_logo.url
-        return None
+        return '/static/img/defult.jpg'
 
     def save(self, *args, **kwargs):
         if self.id == None:
@@ -50,3 +50,8 @@ class Sarki(models.Model):
 
     def __str__(self):
         return "%s %s" % (self.album.album_isim, self.sarki_isim)
+
+    def get_active_or_none(self):
+        if self.is_favorite:
+            return "active"
+        return ''

@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from .forms import AlbumCreateForm, AlbumUpdateForm, SongAddForm, SongQueryForm
+from .forms import AlbumCreateForm, AlbumUpdateForm, SongAddForm, SongQueryForm, SongsQueryForm2
 from .models import Album, Sarki
 
 
@@ -51,7 +51,7 @@ def album_detail(request, slug):
             elif q == 'favorites':
                 songs = album.sarki_set.filter(is_favorite=True)
 
-        paginator = Paginator(songs, 1)
+        paginator = Paginator(songs, 5)
         try:
             songs = paginator.page(page)
         except EmptyPage:
@@ -112,7 +112,7 @@ def delete_song(request, slug, pk):
 
 
 def song_favorite(request, slug, pk):
-    next = request.GET.get('next', None)
+    next = request.GET.get('next', reverse('album-detail', kwargs={'slug': slug}))
     album = Album.objects.get(slug=slug)
     # album.sarki_set.all() bu albüme ait olan tüm şarkılar getir.
     song = album.sarki_set.get(pk=pk)
@@ -135,3 +135,16 @@ def song_update(request, slug, pk):
 
     context = {'album': album, 'form': form}
     return render(request, 'album/songs/update_song.html', context=context)
+
+
+def songs_list(request):
+    form = SongsQueryForm2(data=request.GET or None)
+    songs = Sarki.objects.all()
+    if form.is_valid():
+        favorite_or_all = form.cleaned_data.get('favorite_or_all', None)
+        album = form.cleaned_data.get('album', None)
+        if favorite_or_all and favorite_or_all == 'favorites':
+            songs = songs.filter(is_favorite=True)
+        if album:
+            songs = songs.filter(album=album)
+    return render(request, 'album/songs/songs_list.html', context={'form': form, 'songs': songs})

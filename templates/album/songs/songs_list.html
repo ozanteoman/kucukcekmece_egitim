@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block songs_active %}active{% endblock %}
+
+{% block icerik %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form method="get" action="{% url 'songs-list' %}" style="display: inline">
+                            {% for field in form %}
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        {{ field }}
+                                        {% for error in field.errors %}
+                                            <span class="text-danger">
+                                            <b>
+                                                {{ error }}
+                                            </b>
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <input type="submit" class="btn btn-success btn-md" value="Sorgula">
+                        </form>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Şarkı İsim
+                                </th>
+                                <th>
+                                    Sanatçı
+                                </th>
+                                <th>
+                                    Album
+                                </th>
+                                <th>
+                                    Album Logo
+                                </th>
+                                <th>
+                                    Favorite
+                                </th>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for song in songs %}
+                                <tr>
+                                    <td>
+                                        {{ song.sarki_isim }}
+                                    </td>
+                                    <td>
+                                        {{ song.album.sanatci_isim }}
+                                    </td>
+                                    <td>
+                                        {{ song.album.album_isim }}
+                                    </td>
+                                    <td>
+                                        <img style="width:40px;float:left;margin-right: 10px;" class="img-responsive"
+                                             src="{{ song.album.get_album_photo }}">
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'favorite-song' song.album.slug song.pk %}?next={% url 'songs-list' %}">
+                                            <span class="glyphicon glyphicon-star {{ song.get_active_or_none }}"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

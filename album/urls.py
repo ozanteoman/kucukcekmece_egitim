@@ -1,8 +1,9 @@
 from django.conf.urls import url
 from .views import album_create, album_detail, album_list, album_update, album_delete, album_favori, add_song, \
-    delete_song, song_favorite, song_update
+    delete_song, song_favorite, song_update,songs_list
 
 urlpatterns = [
+    url(r'^songs/$',view=songs_list,name='songs-list'),
     url(r'^album-favorite', view=album_favori, name='album-favorite'),
     url(r'^album-list/$', view=album_list, name='album-list'),
     url(r'^album-ekle/$', view=album_create, name='album-create'),
