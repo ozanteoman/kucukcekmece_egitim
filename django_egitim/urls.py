@@ -19,9 +19,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from .views import index, sehir, sehir_delete, form_calisma, form_calisma_yeni_yontem, form_calisma_yeni_post
+from kullanicilar.views import register
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^register/$', view=register, name='register'),
     url(r'^$', index, name='index'),
     url(r'^sehir/(?P<sehir>[a-z]+)/$', sehir, name='sehir'),
     url(r'^sehir/(?P<sehir>[a-z]+)/sil/$', sehir_delete, name='sehir_delete'),

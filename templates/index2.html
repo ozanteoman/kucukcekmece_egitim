@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block icerik %}
+    <div class="albums-container container-fluid">
+    <h1>{% url 'form-calisma-yeni' %}</h1>
+        {% for album in album_list %}
+            <div class="col-sm-4 col-lg-3">
+                <div class="thumbnail">
+                    <a href="#">
+                        {% if album.get_album_photo %}
+                            <img style="height:300px" src="{{ album.get_album_photo }}" class="img-responsive">
+                        {% else %}
+                            <img style="height:300px" src="{% static 'img/defult.jpg' %}" class="img-responsive">
+                        {% endif %}
+                    </a>
+                    <div class="caption">
+                        <h2>{{ album.album_isim|truncatewords:3 }}</h2>
+                        <h4>{{ album.sanatci_isim }}</h4>
+                        <!-- View Details -->
+                        <a href="{% url 'album-detail' album.slug %}" class="btn btn-primary btn-sm"
+                           role="button">View
+                            Details</a>
+
+                        <!-- Delete Album -->
+                        <a href="{% url 'album-delete' album.slug %}" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                        <!-- Favorite Album -->
+                        <form style="display:inline" method="post" action="{% url 'album-favorite' %}">
+                            {% csrf_token %}
+                            <input name="slug" type="hidden" value="{{ album.slug }}">
+                            <button type="submit" class="btn btn-default btn-sm btn-favorite" role="button">
+                                <span class="glyphicon glyphicon-star {% if album.is_favorite %}active{% endif %}"></span>
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% if songs_list %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Şarkılar</h2>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Şarkı İsim
+                                    </th>
+                                    <th>
+                                        Sanatçı
+                                    </th>
+                                    <th>
+                                        Album
+                                    </th>
+                                    <th>
+                                        Album Logo
+                                    </th>
+                                    <th>
+                                        Favorite
+                                    </th>
+                                    <td></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for song in songs_list %}
+                                    <tr>
+                                        <td>
+                                            {{ song.sarki_isim }}
+                                        </td>
+                                        <td>
+                                            {{ song.album.sanatci_isim }}
+                                        </td>
+                                        <td>
+                                            {{ song.album.album_isim }}
+                                        </td>
+                                        <td>
+                                            <img style="width:40px;float:left;margin-right: 10px;"
+                                                 class="img-responsive" src="{{ song.album.get_album_photo }}">
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'favorite-song' song.album.slug song.pk %}?next={% url 'songs-list' %}">
+                                                <span class="glyphicon glyphicon-star {{ song.get_active_or_none }}"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

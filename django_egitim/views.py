@@ -1,6 +1,9 @@
 from django.shortcuts import render, Http404, reverse, HttpResponseRedirect
 from .forms import KullaniciForm
 
+from album.models import Album, Sarki
+from django.db.models import Q
+
 sehirler_sozluk = {
     'adana': 'Adana sıcak bir şehirimiz',
     'istanbul': 'En yüksek nüfusa sahip şehirimiz',
@@ -9,7 +12,19 @@ sehirler_sozluk = {
 
 
 def index(request):
-    return HttpResponseRedirect(reverse('album-list'))
+    album_list = Album.objects.all()
+    q = request.GET.get('q', None)
+    if q:
+        album_list = album_list.filter(
+            Q(album_isim__icontains=q) | Q(sanatci_isim__icontains=q) | Q(album_tur__icontains=q))
+        songs_list = Sarki.objects.filter(
+            Q(sarki_isim__icontains=q) | Q(album__album_isim__icontains=q) | Q(album__album_tur__icontains=q) | Q(
+                album__sanatci_isim__icontains=q))
+        return render(request, 'index2.html', context={
+            'album_list': album_list, 'songs_list': songs_list
+        })
+
+    return render(request, 'index2.html', context={'album_list': album_list})
 
 
 def sehir(request, sehir):

@@ -148,3 +148,4 @@ def songs_list(request):
         if album:
             songs = songs.filter(album=album)
     return render(request, 'album/songs/songs_list.html', context={'form': form, 'songs': songs})
+
