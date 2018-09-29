@@ -1,5 +1,5 @@
 {% extends 'anonymous_user_base.html' %}
-{% block register %}active{% endblock %}
+{% block login %}active{% endblock %}
 
 {% block icerik %}
     <div class="container-fluid">
@@ -7,9 +7,14 @@
             <div style="float:none;margin:0 auto" class="col-lg-8 pull-center">
                 <div style="margin-top:50px" class="panel panel-default">
                     <div class="panel-body">
-                        <h2>Register</h2>
+                        <h2>Login</h2>
                         <div class="col-lg-8 pull-center">
-                            <form method="post" action="{% url 'user-register' %}">
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error }}</strong>
+                                </div>
+                            {% endfor %}
+                            <form method="post" action="{% url 'user-login' %}">
                                 {% csrf_token %}
                                 {% for field in form %}
                                     <div class="row">
@@ -34,10 +39,10 @@
                                 {% endfor %}
                                 <div class="row">
                                     <button type="submit" class="btn btn-success">
-                                        Register
+                                        Login
                                     </button>
                                     <span class="text-primary">
-                                        <a href="#"><b>Bir hesabın var mı ?</b></a>
+                                        <a href="#"><b>Şifreni mi unuttun ?</b></a>
                                     </span>
                                 </div>
                             </form>
